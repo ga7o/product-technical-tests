@@ -37,6 +37,7 @@ export default function attachRoutes({ models, router, handlers }) {
      *
      * @apiParam {Number} latitude      Latitude component of coordinate
      * @apiParam {Number} longitude     Longitude component of coordinate
+     * @apiParam {Number} distance      Maximum distance in meters from the latlon to search
      * @apiParam {Number} limit         Number of boutiques to return
      *
      * @apiSuccessExample {json} Success-Response:
