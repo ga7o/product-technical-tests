@@ -3,15 +3,20 @@ import _ from 'lodash';
 import cors from 'cors';
 import * as models from '../models';
 
+
 export default function buildAPI(express, routes) {
     // Build express app
     const app  = express();
+    let bodyParser = require('body-parser')
+
 
     // let express trust & set x-forwarded-for value to req.ip
     app.enable('trust proxy');
 
     app.use(compression());
     app.use(cors());
+
+    app.use(bodyParser.json())
 
     app.use((req, res, next) => {
         res.header('Cache-Control', 'no-cache');
