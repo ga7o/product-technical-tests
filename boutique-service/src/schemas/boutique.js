@@ -9,4 +9,9 @@ export default {
     },
     description: Schema.Types.String,
 
+    // Adding the Google Place ID field
+    google_places_id: {
+        type: Schema.Types.Number,
+        default: -1
+    }
 }
