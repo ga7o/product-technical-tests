@@ -9,6 +9,12 @@ export default {
     },
     description: Schema.Types.String,
 
+    founder_quote: Schema.Types.String,
+
+    logo: {
+        url: Schema.Types.String
+    },
+
     // Adding the Google Place ID field
     google_places_id: {
         type: Schema.Types.Number,
