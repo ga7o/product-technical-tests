@@ -16,8 +16,12 @@ export default {
     },
 
     // Adding the Google Place ID field
+    // These IDs often take the form of a long string. Example:
+    // ElMxNjIsIExhbmUgTnVtYmVyIDcsIEJsb2NrIEgsIE5lYiBTYXJhaSwgU2FpbmlrIEZhcm0sIE5ldyBEZWxoaSwgRGVsaGkgMTEwMDYyLCBJbmRpYQ
+    // More infor: https://developers.google.com/places/place-id
+
     google_places_id: {
-        type: Schema.Types.Number,
-        default: -1
+        type: Schema.Types.String,
+        default: "-1"
     }
 }

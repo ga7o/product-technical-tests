@@ -47,7 +47,7 @@
   "ava": {
     "failFast": false,
     "serial": false,
-    "watch": false,
+    "watch": true,
     "tap": false,
     "verbose": true,
     "require": [
