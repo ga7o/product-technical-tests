@@ -1,21 +1,156 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
+
+<div class="container">
   <h1>
-    Welcome to {{ title }}!
+    Boutiques List
   </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+
+  <ngb-pagination
+    [(page)]="page"
+    [maxSize]="5" [rotate]="true" [boundaryLinks]="true"
+    [pageSize]="pageSize"
+    [collectionSize]="boutiques.length"></ngb-pagination>
+
+  <table *ngIf="boutiques">
+    <tr>
+      <th>ID</th><th>Name</th><th>Description</th><th>Founder Quote</th>
+    </tr>
+    <tr *ngFor="let boutique of boutiques | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize" (click)="openModal(content, boutique._id)">
+      <td>
+        <img class="list-thumb-img" [attr.src]="boutique.logo?.url ? boutique.logo.url : '../assets/No_image_available.png'" >
+      </td>
+      <td>{{ boutique.name }}</td>
+      <td>{{ boutique.description }}</td>
+      <td>{{ boutique.founder_quote }}</td>
+      <!--td><button (click)="openModal(content, 'edit', user )">Edit</button> </td>
+      <td><button (click)="openModal(content,'remove', user)">Remove</button> </td-->
+    </tr>
+  </table>
+
+  <ngb-pagination
+    [(page)]="page"
+    [maxSize]="5" [rotate]="true" [boundaryLinks]="true"
+    [pageSize]="pageSize"
+    [collectionSize]="boutiques.length"></ngb-pagination>
 </div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/cli">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+
 
 <router-outlet></router-outlet>
+
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">View boutique</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+
+
+    <div class="form-group row">
+      <label for="boutiqueId" class="col-sm-2 col-form-label">Id</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="boutiqueId"
+               placeholder="Id" readonly
+               name="id" [(ngModel)]="currentBoutique._id"
+               #id="ngModel">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="name" class="col-sm-2 col-form-label">User</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="name" placeholder="name" readonly
+               name="name" [(ngModel)]="currentBoutique.name"
+               #name="ngModel">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="google_places_id" class="col-sm-2 col-form-label">Google Places</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="google_places_id" placeholder="google_places_id" readonly
+               name="google_places_id" [(ngModel)]="currentBoutique.google_places_id"
+               #google_places_id="ngModel">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="slug" class="col-sm-2 col-form-label">Slug</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="slug" placeholder="slug" readonly
+               name="slug" [(ngModel)]="currentBoutique.slug"
+               #slug="ngModel">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="description" class="col-sm-2 col-form-label">Description</label>
+      <div class="col-sm-10">
+            <textarea rows="4" cols="50"
+                      placeholder="Description"
+                      class="form-control"
+                      name="description"
+                      id="description" #description="ngModel"
+                      [(ngModel)]="currentBoutique.description"
+                      readonly
+            >
+            </textarea>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="founder_quote" class="col-sm-2 col-form-label">Founder Quote</label>
+      <div class="col-sm-10">
+            <textarea rows="4" cols="50"
+                      placeholder="Description"
+                      class="form-control"
+                      name="founder_quote"
+                      id="founder_quote" #founder_quote="ngModel"
+                      [(ngModel)]="currentBoutique.founder_quote"
+                      readonly
+            >
+            </textarea>
+      </div>
+    </div>
+
+
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label">Logo</label>
+      <div class="col-sm-10">
+              <img
+                name="logo"
+                class="list-thumb-img"
+                [attr.src]="currentBoutique.logo?.url ? currentBoutique.logo.url : '../assets/No_image_available.png'" >
+
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label">Location</label>
+      <div class="col-sm-10">
+        <div style="height: 300px;"
+             leaflet
+             [leafletOptions]="leafletOptions"
+             >
+        </div>
+      </div>
+    </div>
+
+    <!--div class="form-group ">
+      <button class="btn btn-primary">Save</button>
+    </div-->
+
+  </div>
+  <div class="modal-footer">
+    <div class="form-group ">
+      <!--button class="btn btn-outline-dark" >Close</button-->
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Close</button>
+
+    </div>
+
+  </div>
+
+</ng-template>
+
+
