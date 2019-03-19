@@ -8,14 +8,15 @@ export default function boutiqueUpdate({models}, req, res, next) {
     const Boutique = models.boutique;
 
     Boutique.findByIdAndUpdate(
-        { _id:boutiqueId },
+        { _id: boutiqueId },
         data,
-        (err,data)=>{
+        {new: true},
+        (err,dataUpdated)=>{
             if(err) {
                 console.error(err)
                 return res.status(500).send({ error: err })
             }
-            return res.send(data);
+            return res.send(dataUpdated);
         }
     )
 

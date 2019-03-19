@@ -141,6 +141,6 @@ export default function attachRoutes({ models, router, handlers }) {
      *     }
      *
      */
-    router.put('/boutiques/:id', handlers.boutiqueAdd.bind(undefined, {models}));
+    router.put('/boutiques/:id', handlers.boutiqueUpdate.bind(undefined, {models}));
 
 }
